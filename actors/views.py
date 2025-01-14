@@ -1,17 +1,18 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
+from app.permissions import GlobalDefaultPermission
 from actors.models import Actor
 from actors.serializers import ActorSerializer
 
 
 class ActorCreateListView(ListCreateAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission,)
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
 
 class ActorRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission,)
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
